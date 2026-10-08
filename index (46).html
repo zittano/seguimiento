@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#F7F4EE">
+<title>Seguimiento · Zittano</title>
+<meta name="description" content="Seguí tu trámite de ciudadanía italiana con Zittano, paso a paso.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zittano">
+<meta property="og:title" content="Seguí tu trámite con Zittano">
+<meta property="og:description" content="Mirá en qué etapa está tu trámite, cuando quieras.">
+<meta property="og:image" content="https://seguimiento.zittano.com.ar/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F4EE; --card:#FFFFFF; --ink:#22252A; --muted:#5E6168; --line:#E6E0D4; --field:#FBFAF7; --field-line:#D8D3C8;
+  --green:#17734A; --green-dark:#0F5435; --green-soft:#E3F1E8; --green-on-dark:#A9D8BD;
+  --red:#B9343B; --red-soft:#FBE6E6; --red-ink:#8E2329;
+  --amber-soft:#FCEFD3; --amber-ink:#6B4400; --amber-icon:#8A5A00;
+  --track:#ECE7DD; --pending:#CFC8BA;
+  --shadow:0 1px 2px rgba(34,37,42,.06),0 8px 24px rgba(34,37,42,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--green)} a:hover{color:var(--green-dark)}
+.tricolor{display:flex;height:6px}.tricolor i{flex:1}.tricolor i:nth-child(1){background:var(--green)}.tricolor i:nth-child(2){background:#fff}.tricolor i:nth-child(3){background:var(--red)}
+.wrap{max-width:480px;margin:0 auto;min-height:calc(100vh - 6px);display:flex;flex-direction:column}
+.brand{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;letter-spacing:3px;color:#4A4D53}
+.serif{font-family:'Bricolage Grotesque',sans-serif;font-weight:700}
+.hidden{display:none!important}
+.card{background:var(--card);border-radius:20px;box-shadow:var(--shadow)}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.btn{height:52px;border-radius:14px;border:none;font:inherit;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;cursor:pointer;width:100%}
+.btn.primary{background:var(--green);color:#fff}.btn.primary:hover{background:var(--green-dark);color:#fff}
+.btn.ghost{background:#fff;border:1.5px solid var(--field-line);color:var(--ink);height:48px;font-size:15px}
+.btn.dark{background:var(--ink);color:#fff;height:46px;font-size:15px}
+.btn:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #7FB89A;outline-offset:2px}
+.btn[disabled]{opacity:.6;cursor:progress}
+
+/* Login */
+#login{padding:28px 20px 32px;display:flex;flex-direction:column;flex:1}
+#login header{padding:0 8px}
+#login .hero{padding:36px 8px 0;display:flex;flex-direction:column;gap:12px}
+#login h1{margin:0;font-size:38px;line-height:42px}
+#login .lead{margin:0;font-size:16px;line-height:24px;color:var(--muted)}
+#login form{margin-top:32px;padding:24px;display:flex;flex-direction:column;gap:16px}
+label{font-size:13px;font-weight:700}
+.field{display:flex;flex-direction:column;gap:6px}
+input[type=text]{height:52px;border:1.5px solid var(--field-line);border-radius:12px;padding:0 14px;font:inherit;font-size:18px;letter-spacing:1px;background:var(--field);color:var(--ink);text-transform:uppercase}
+input::placeholder{color:#9A9CA1;letter-spacing:1px}
+.hint{margin:0;font-size:13px;line-height:19px;color:var(--muted);text-align:center}
+.err{margin:0;background:var(--red-soft);color:var(--red-ink);font-size:14px;line-height:20px;padding:12px 14px;border-radius:12px}
+#login footer{margin-top:auto;padding-top:32px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+#login footer a{font-size:14px;font-weight:700}
+.small{font-size:12px;color:var(--muted)}
+
+/* App */
+#app{display:flex;flex-direction:column;flex:1}
+.topbar{padding:18px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.topbar .brand{font-size:17px;letter-spacing:2.5px}
+.avatar{width:36px;height:36px;border-radius:999px;background:var(--ink);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.content{padding:20px 20px 24px;display:flex;flex-direction:column;gap:12px;flex:1}
+.hello{font-size:15px;color:var(--muted)}
+.content h1{margin:0;font-size:28px;line-height:32px}
+.tram{padding:18px;display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.tram-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.tram-name{font-size:16px;font-weight:700}
+.tram-code{font-size:12px;color:var(--muted);margin-top:2px}
+.bar{height:10px;border-radius:999px;background:var(--track);overflow:hidden}
+.bar > div{height:100%;border-radius:999px;background:var(--green);transition:width .6s ease}
+.tram-meta{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.gestor{display:flex;align-items:center;gap:12px;border-top:1px solid #EFEAE1;padding-top:12px}
+.g-av{width:38px;height:38px;border-radius:999px;background:var(--green-soft);color:var(--green);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.g-k{font-size:12px;color:var(--muted)}
+.g-n{font-size:15px;font-weight:700}
+.now{background:var(--ink);color:#fff;border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.now .k{font-size:12px;font-weight:700;letter-spacing:1px;color:var(--green-on-dark)}
+.now .t{font-size:17px;font-weight:700;line-height:22px}
+.now .d{font-size:14px;line-height:20px;color:#D9DADC}
+.alert{border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.alert.amber{background:var(--amber-soft)}.alert.amber .t{color:var(--amber-ink)}.alert.amber .d{color:#4A3608}
+.alert.green{background:var(--green-soft)}.alert.green .t{color:var(--green-dark)}.alert.green .d{color:#1F3B2C}
+.alert .row{display:flex;gap:10px;align-items:center}
+.alert .t{font-size:15px;font-weight:700}
+.alert .d{font-size:14px;line-height:20px}
+.wa{padding:0 20px 12px;margin-top:auto}
+.out{font-size:13px;text-align:center;padding:4px 0 8px}
+.out button{background:none;border:none;font:inherit;color:var(--muted);text-decoration:underline;cursor:pointer;padding:8px}
+.loading{display:flex;flex:1;align-items:center;justify-content:center;color:var(--muted);font-size:14px;gap:10px}
+.spin{width:18px;height:18px;border-radius:999px;border:2.5px solid var(--track);border-top-color:var(--green);animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.demo-flag{background:var(--ink);color:#fff;font-size:12px;text-align:center;padding:6px}
+</style>
+</head>
+<body>
+<div class="tricolor" aria-hidden="true"><i></i><i></i><i></i></div>
+<div id="demoFlag" class="demo-flag hidden">Modo demo · datos de ejemplo</div>
+
+<div class="wrap">
+
+  <!-- ═══ INGRESO ═══ -->
+  <main id="login" class="hidden">
+    <header>
+      <img src="logo.png" alt="Zittano · Gestoría de Ciudadanías" width="168" height="97" style="display:block;height:auto">
+    </header>
+    <div class="hero">
+      <span class="pill green" style="align-self:flex-start">Portal de clientes</span>
+      <h1 class="serif">Seguí tu trámite, paso a paso</h1>
+      <p class="lead">Mirá en qué etapa está tu trámite y qué viene después, cuando quieras.</p>
+    </div>
+    <form id="loginForm" class="card" novalidate>
+      <div class="field">
+        <label for="codigo">Tu código de seguimiento</label>
+        <input id="codigo" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ZT-XXXXX-XXXXX" maxlength="20">
+      </div>
+      <p id="loginErr" class="err hidden" role="alert"></p>
+      <button id="loginBtn" class="btn primary" type="submit">Ver mi trámite
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <p class="hint">Te lo mandamos por WhatsApp o mail cuando arrancó tu trámite.</p>
+    </form>
+    <footer>
+      <a id="waLogin" href="#" target="_blank" rel="noopener">¿No lo encontrás? Escribinos por WhatsApp</a>
+      <div class="small">Pioneros en ciudadanía italiana desde 2014</div>
+    </footer>
+  </main>
+
+  <!-- ═══ CARGANDO ═══ -->
+  <div id="loading" class="loading"><div class="spin" aria-hidden="true"></div>Cargando tu trámite…</div>
+
+  <!-- ═══ TRÁMITE ═══ -->
+  <div id="app" class="hidden">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="emblema.png" alt="" width="46" height="20" style="display:block">
+        <div class="brand">ZITTANO</div>
+      </div>
+      <div class="avatar" id="avatar" aria-hidden="true"></div>
+    </div>
+
+    <section id="tab-estado" class="content">
+      <div class="hello" id="hello"></div>
+      <h1 class="serif" id="headline"></h1>
+      <div class="card tram">
+        <div class="tram-top">
+          <div>
+            <div class="tram-name" id="tramName"></div>
+            <div class="tram-code" id="tramCode"></div>
+          </div>
+          <span class="pill green" id="tramPill"></span>
+        </div>
+        <div id="progressWrap">
+          <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="bar"><div id="barFill" style="width:0%"></div></div>
+        </div>
+        <div class="tram-meta"><span id="progressTxt"></span><span id="updated"></span></div>
+        <div id="gestorRow" class="gestor hidden">
+          <div class="g-av" id="gestorAv" aria-hidden="true"></div>
+          <div><div class="g-k">A cargo de tu trámite</div><div class="g-n" id="gestorName"></div></div>
+        </div>
+      </div>
+      <div id="alerts" style="display:flex;flex-direction:column;gap:12px"></div>
+      <div id="nowCards" style="display:flex;flex-direction:column;gap:12px"></div>
+    </section>
+
+    <div class="wa"><a id="waApp" class="btn ghost" href="#" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17734A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/></svg>
+      Consultar por WhatsApp</a></div>
+    <div class="out"><button type="button" id="logout">Entrar con otro código</button></div>
+
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   CONFIG — la clave "anon" es pública por diseño (es la misma que usa
+   el Sistema). Con ella el portal SOLO puede llamar a portal_estado().
+   ════════════════════════════════════════════════════════════════ */
+const SUPABASE_URL  = 'https://gcbmsbkkzodmszrqtdfb.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjYm1zYmtrem9kbXN6cnF0ZGZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMDEzMzgsImV4cCI6MjA4OTU3NzMzOH0.D_FE2RLpc6kLgSyw2Ai_pw_efJpdfUHwMuk31MAI75o';
+const WHATSAPP      = '5491173674060';
+
+/* ── Textos para el cliente ───────────────────────────────────── */
+const TIPOS = {
+  reconstruccion:'Reconstrucción de actas', hijo_directo:'Ciudadanía · hijo directo',
+  aire:'AIRE / SPID', pasaporte:'Turno de pasaporte', menor:'Inscripción de menor',
+  matrimonio:'Inscripción de matrimonio', divorcio:'Inscripción de divorcio'
+};
+const ETAPAS = {
+  'Consulta inicial':['Estamos analizando tu caso','Revisamos tu historia familiar y armamos el plan del trámite.'],
+  'En proceso - Acta Italiana':['Buscando tus actas en Italia','Las pedimos al comune de origen. Te avisamos apenas lleguen.'],
+  'En proceso - CNE':['Tramitando el certificado de la CNE','Es el certificado de la Cámara Nacional Electoral sobre la naturalización de tu ascendiente.'],
+  'En proceso - Actas Nacionales':['Gestionando tus partidas argentinas','Estamos pidiendo las actas de tu línea familiar en los registros civiles.'],
+  'En proceso - Traducciones':['Traduciendo tu documentación','Tus actas se están traduciendo al italiano.'],
+  'En proceso - AIRE de cero':['Gestionando tu inscripción en el AIRE','Es el registro de italianos que viven en el exterior.'],
+  'En proceso - AIRE':['Gestionando tu inscripción en el AIRE','Es el registro de italianos que viven en el exterior.'],
+  'En proceso - Anagrafe - Hijo Menor':['Inscribiendo a tu hijo o hija en Italia','Estamos registrando el nacimiento en el comune.'],
+  'En proceso - Anagrafe - Matrimonio':['Inscribiendo tu matrimonio en Italia','Estamos registrando el acta en el comune.'],
+  'En proceso - Anagrafe - Domicilio':['Actualizando tu domicilio en Italia','Estamos registrando tu dirección actual en el comune.'],
+  'En proceso - Divorcio':['Inscribiendo tu divorcio en Italia','Estamos registrando la sentencia en el comune.'],
+  'En proceso - Pasaportes':['Gestionando tu pasaporte','Estamos trabajando en tu turno en el consulado.'],
+  'En proceso - Carga DNI':['Cargando tus datos de documento','Estamos registrando tu DNI en el sistema consular.'],
+  'En proceso - Códice Fiscale':['Tramitando tu codice fiscale','Es tu número de identificación fiscal italiano.'],
+  'En proceso - CIE':['Tramitando tu CIE','La carta d’identità elettronica, tu documento de identidad italiano.'],
+  'En proceso - SPID':['Tramitando tu SPID','Tu identidad digital para hacer trámites italianos online.']
+};
+const LISTO = ['finalizado','recibida','listo'];
+
+/* ── Datos de ejemplo (?demo) ─────────────────────────────────── */
+const DEMO = {
+  nombre:'Laura', gestor:'Malena', tipo:'reconstruccion', codigo:'ZT-7KQ4M-2XPHA', actualizado:new Date(Date.now()-2*864e5).toISOString().slice(0,10),
+  tags:['En proceso - Acta Italiana','Documentación pendiente'],
+  secciones:[
+    {key:'actas_it',titulo:'🇮🇹 Actas Italianas',items:[{label:'Acta de Nacimiento Italiana',estado:'proceso'},{label:'Acta de Matrimonio Italiana o Arg.',estado:'proceso'},{label:'Acta de Defunción',estado:''}]},
+    {key:'actas_nac',titulo:'📋 Actas Nacionales',items:[{label:'Acta de Nacimiento',estado:'finalizado'},{label:'Acta de Matrimonio',estado:'finalizado'},{label:'Acta de Nacimiento',estado:'problema'}]},
+    {key:'camara',titulo:'📁 Expediente de Cámara',items:[{label:'Expediente de Cámara',estado:'finalizado'},{label:'Apostillado',estado:''},{label:'Traducido',estado:''}]},
+    {key:'tradus',titulo:'🔤 Traducciones',items:[{label:'Traducciones',estado:''}]}
+  ]
+};
+
+/* ── Utilidades ───────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => { const n=document.createElement(tag); if(cls) n.className=cls; if(text!=null) n.textContent=text; return n; };
+const show = (id, on=true) => $(id).classList.toggle('hidden', !on);
+const params = new URLSearchParams(location.search);
+const isDemo = params.has('demo');
+const normCode = s => String(s||'').toUpperCase().replace(/\s/g,'').replace(/^ZT(?!-)/,'ZT-').replace(/^(ZT-[A-Z0-9]{5})(?!-)([A-Z0-9])/,'$1-$2');
+const validCode = c => /^ZT-[A-Z0-9]{5}-[A-Z0-9]{5}$/.test(c);
+const waLink = code => 'https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(code ? 'Hola! Quería consultar por mi trámite (código '+code+').' : 'Hola! No encuentro mi código de seguimiento.');
+
+function parseFecha(v){
+  if(!v) return null;
+  const s=String(v);
+  let m=s.match(/^(\d{4})-(\d{2})-(\d{2})/); if(m) return new Date(+m[1],m[2]-1,+m[3]);
+  m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/); if(m) return new Date(m[3].length===2?2000+ +m[3]:+m[3],m[2]-1,+m[1]);
+  return null;
+}
+function actualizadoTxt(v){
+  const d=parseFecha(v); if(!d) return '';
+  const hoy=new Date(); hoy.setHours(0,0,0,0);
+  const dias=Math.round((hoy-d)/864e5);
+  if(dias<=0) return 'Actualizado hoy';
+  if(dias===1) return 'Actualizado ayer';
+  if(dias<30) return 'Actualizado hace '+dias+' días';
+  return '';   // una fecha vieja da sensación de abandono: mejor no mostrarla
+}
+
+/* ── Datos ────────────────────────────────────────────────────── */
+async function fetchEstado(code){
+  if(isDemo) return new Promise(r=>setTimeout(()=>r(DEMO),400));
+  const res = await fetch(SUPABASE_URL+'/rest/v1/rpc/portal_estado', {
+    method:'POST',
+    headers:{'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},
+    body:JSON.stringify({p_codigo:code})
+  });
+  if(!res.ok) throw new Error('http '+res.status);
+  return res.json();
+}
+
+/* ── Pantallas ────────────────────────────────────────────────── */
+function showLogin(msg, code){
+  show('loading',false); show('app',false); show('login',true);
+  if(code) $('codigo').value=code;
+  $('loginErr').textContent=msg||''; show('loginErr',!!msg);
+  $('waLogin').href=waLink('');
+}
+
+async function load(code){
+  show('login',false); show('app',false); show('loading',true);
+  try{
+    const data = await fetchEstado(code);
+    if(!data){ showLogin('No encontramos ese código. Revisalo o escribinos por WhatsApp.', code); return; }
+    render(data);
+  }catch(e){
+    showLogin('No pudimos conectarnos. Probá de nuevo en un ratito.', code);
+  }
+}
+
+function render(d){
+  const tags = Array.isArray(d.tags)?d.tags:[];
+  const secs = (Array.isArray(d.secciones)?d.secciones:[]).filter(s=>Array.isArray(s.items)&&s.items.length);
+  const items = secs.flatMap(s=>s.items);
+  const listos = items.filter(i=>LISTO.includes(i.estado)).length;
+  const terminado = tags.includes('Finalizado')||tags.includes('Cerrado');
+  const carpeta = tags.includes('Carpeta para retirar');
+  const etapas = tags.filter(t=>t.startsWith('En proceso - ')||t==='Consulta inicial');
+  const nombre = d.nombre||'';
+
+  // Encabezado
+  $('avatar').textContent = (nombre.charAt(0)||'Z').toUpperCase();
+  $('hello').textContent = nombre ? 'Hola, '+nombre : 'Hola';
+  $('headline').textContent = terminado ? '¡Tu trámite está terminado!'
+    : carpeta ? '¡Tu carpeta está lista!'
+    : tags.includes('Documentación pendiente') ? 'Necesitamos algo de vos para seguir'
+    : 'Tu trámite está en marcha';
+  $('tramName').textContent = TIPOS[d.tipo] || 'Tu trámite';
+  $('tramCode').textContent = d.codigo || '';
+  $('tramPill').textContent = terminado ? 'Finalizado' : carpeta ? 'Para retirar' : 'En curso';
+
+  // Progreso
+  const pct = (terminado||carpeta) ? 100 : items.length ? Math.round(listos/items.length*100) : 0;
+  show('progressWrap', items.length>0 || terminado || carpeta);
+  $('bar').setAttribute('aria-valuenow', pct);
+  $('bar').setAttribute('aria-label', 'Avance del trámite: '+pct+'%');
+  requestAnimationFrame(()=>{ $('barFill').style.width = pct+'%'; });
+  $('progressTxt').textContent = (terminado||carpeta) ? 'Todo listo' : items.length ? pct+'% de avance' : '';
+  $('updated').textContent = actualizadoTxt(d.actualizado);
+  const gestor = String(d.gestor||'').trim();
+  show('gestorRow', !!gestor);
+  if(gestor){ $('gestorName').textContent = gestor+' · Zittano'; $('gestorAv').textContent = gestor.charAt(0).toUpperCase(); }
+
+  // Avisos
+  const alerts=$('alerts'); alerts.replaceChildren();
+  const addAlert=(kind,title,desc,cta)=>{
+    const a=el('div','alert '+kind); const row=el('div','row');
+    row.insertAdjacentHTML('beforeend', kind==='green'
+      ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17734A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+      : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5A00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16.5h.01"/></svg>');
+    row.append(el('div','t',title)); a.append(row, el('div','d',desc));
+    if(cta){ const b=el('a','btn dark',cta); b.href=waLink(d.codigo); b.target='_blank'; b.rel='noopener'; a.append(b); }
+    alerts.append(a);
+  };
+  if(terminado) addAlert('green','Trámite finalizado','Gracias por confiar en Zittano. Si necesitás algo más, estamos a un mensaje.');
+  else if(carpeta) addAlert('green','Tu carpeta te espera','Escribinos para coordinar cuándo pasás a retirarla.','Coordinar retiro');
+  if(!terminado && tags.includes('Documentación pendiente')) addAlert('amber','Nos falta documentación tuya','Escribinos y te contamos exactamente qué necesitamos para seguir avanzando.','Ver qué falta');
+  if(!terminado && tags.includes('Pago pendiente')) addAlert('amber','Hay un pago pendiente','Escribinos y lo resolvemos juntos para no frenar el trámite.','Hablar con Zittano');
+
+  // Etapa actual
+  const now=$('nowCards'); now.replaceChildren();
+  if(!terminado){
+    const lista = etapas.length ? etapas : (carpeta ? [] : ['__generico']);
+    lista.forEach(t=>{
+      const [titulo,desc] = ETAPAS[t] || (t==='__generico'
+        ? ['Estamos trabajando en tu trámite','Te avisamos apenas haya novedades.']
+        : [t.replace('En proceso - ','En proceso: '),'Te avisamos apenas haya novedades.']);
+      const c=el('div','now'); c.append(el('div','k','AHORA'), el('div','t',titulo), el('div','d',desc)); now.append(c);
+    });
+  }
+
+  $('waApp').href = waLink(d.codigo);
+  show('loading',false); show('login',false); show('app',true);
+  window.scrollTo(0,0);
+}
+
+/* ── Eventos ──────────────────────────────────────────────────── */
+$('loginForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const code=normCode($('codigo').value);
+  if(!validCode(code)){ showLogin('El código tiene este formato: ZT‑XXXXX‑XXXXX.', code); return; }
+  const u=new URL(location.href); u.searchParams.set('c',code); history.replaceState(null,'',u);
+  load(code);
+});
+$('logout').onclick=()=>{ const u=new URL(location.href); u.searchParams.delete('c'); history.replaceState(null,'',u); $('codigo').value=''; showLogin(); };
+
+/* ── Inicio ───────────────────────────────────────────────────── */
+show('demoFlag', isDemo);
+const inicial = normCode(params.get('c'));
+if(isDemo) load(DEMO.codigo);
+else if(validCode(inicial)) load(inicial);
+else showLogin(params.get('c') ? 'Ese link no parece completo. Probá copiando el código a mano.' : '', params.get('c')?inicial:'');
+</script>
+</body>
+</html>
