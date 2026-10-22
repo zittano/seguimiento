@@ -273,38 +273,51 @@ const LISTO = ['finalizado','recibida','listo'];
    aparece una etiqueta que no conocemos, el cliente NUNCA baja a
    cero: se queda en la última etapa conocida (o en la primera).
    ════════════════════════════════════════════════════════════════ */
+/* Cada etapa tiene DOS listas, y la diferencia es importante:
+     haciendo → lo que es cierto mientras la etapa está en curso.
+                Son acciones nuestras: pedimos, enviamos, seguimos.
+     logro    → lo que es cierto SOLO cuando la etapa terminó.
+                Son resultados: llegó, salió, quedó listo.
+   Nunca le decimos al cliente que algo llegó si no llegó: un acta
+   italiana puede tardar meses mientras ya avanzamos con las
+   argentinas, así que las etapas no se dan por cumplidas en fila. */
 const RECONSTRUCCION = [
   { n:'Arrancamos tu caso', c:'--vi', l:'--vil', i:'◆',
-    tags:['Consulta inicial'],
+    tags:['Consulta inicial'], seguro:true,
     ahora:'Estudiamos tu árbol familiar y confirmamos por dónde va tu ciudadanía.',
-    hecho:['Analizamos tu línea de descendencia italiana','Confirmamos que tu caso aplica','Armamos tu presupuesto a medida','Abrimos tu expediente en Zittano'],
+    haciendo:['Analizamos tu línea de descendencia italiana','Confirmamos que tu caso aplica','Armamos tu presupuesto a medida','Abrimos tu expediente en Zittano'],
+    logro:['Analizamos tu caso y confirmamos que aplica','Abrimos tu expediente en Zittano'],
     sigueT:'Pedimos tus actas en Italia',
     sigueD:'Escribimos al comune de origen de tu familia para que nos manden las partidas originales.' },
-  { n:'Buscando tus actas en Italia', c:'--vd', l:'--vdl', i:'✈',
+  { n:'Tus actas en Italia', c:'--vd', l:'--vdl', i:'✈',
     tags:['En proceso - Acta Italiana'],
     ahora:'Le pedimos al comune de origen de tu familia las partidas originales.',
-    hecho:['Identificamos el comune exacto de tu antepasado','Enviamos el pedido formal de las actas','Hacemos seguimiento del pedido'],
+    haciendo:['Identificamos el comune de tu antepasado','Enviamos el pedido formal al comune','Seguimos el pedido de cerca'],
+    logro:['Llegaron tus actas desde Italia'],
     sigueT:'Juntamos tus actas argentinas',
     sigueD:'Mientras Italia responde, vamos pidiendo todo lo que hace falta de este lado.',
     tiempo:'Los comunes italianos suelen tardar entre 2 y 6 meses. Es la parte más lenta del trámite y no depende de nosotros, pero los seguimos de cerca.' },
-  { n:'Juntando tus actas argentinas', c:'--ci', l:'--cil', i:'★',
+  { n:'Tus actas argentinas', c:'--ci', l:'--cil', i:'★',
     tags:['En proceso - CNE','En proceso - Actas Nacionales','En proceso - Expte de Cámara'],
     ahora:'Pedimos las partidas argentinas y los expedientes que necesita tu carpeta.',
-    hecho:['Llegaron las actas desde Italia','Pedimos las partidas argentinas del Registro Civil','Iniciamos el expediente de Cámara'],
+    haciendo:['Pedimos tus partidas al Registro Civil','Iniciamos tu expediente de Cámara'],
+    logro:['Llegaron tus partidas argentinas','Salió tu expediente de Cámara'],
     sigueT:'Apostillas y traducciones',
     sigueD:'Cada acta se apostilla y la traduce un traductor público al italiano.',
     tiempo:'Entre 1 y 2 meses según la provincia de cada partida.' },
   { n:'Apostillas y traducciones', c:'--am', l:'--aml', i:'✎',
     tags:['En proceso - Traducciones'],
     ahora:'Cada acta se apostilla y la traduce un traductor público al italiano.',
-    hecho:['Llegaron todas tus actas, de Italia y de acá','Verificamos que los datos coincidan entre partidas','Mandamos todo a apostillar','Encargamos las traducciones oficiales'],
+    haciendo:['Mandamos tu documentación a apostillar','Encargamos las traducciones al italiano'],
+    logro:['Tus actas quedaron apostilladas y traducidas'],
     sigueT:'Revisión final de la carpeta',
     sigueD:'Revisamos hoja por hoja con el criterio del consulado que te toca, antes de presentar.',
     tiempo:'Alrededor de un mes entre apostillas y traducciones.' },
   { n:'Carpeta lista', c:'--az', l:'--azl', i:'✦',
     tags:['Carpeta para retirar'],
     ahora:'Tu carpeta está completa y revisada con el criterio de tu consulado.',
-    hecho:['Tu carpeta está completa: actas, apostillas y traducciones','Revisamos hoja por hoja contra los requisitos del consulado','Corregimos todo lo que podía observarse'],
+    haciendo:['Revisamos tu carpeta hoja por hoja con el criterio de tu consulado'],
+    logro:['Tu carpeta quedó completa y revisada'],
     sigueT:'El turno en el consulado',
     sigueD:'Coordinamos el turno y te preparamos para el día de la presentación.',
     tiempo:'Los turnos dependen de cada consulado. Te avisamos apenas tengamos fecha.',
@@ -312,30 +325,35 @@ const RECONSTRUCCION = [
   { n:'Trámite terminado', c:'--ro', l:'--rol', i:'❖',
     tags:['Finalizado','Cerrado'],
     ahora:'Terminamos tu trámite. Gracias por confiar en nosotros.',
-    hecho:['Tu documentación quedó completa y presentada','Te acompañamos en todo el recorrido'],
+    haciendo:['Tu trámite quedó terminado'],
+    logro:['Tu trámite quedó terminado'],
     sigueT:'Lo que viene después',
     sigueD:'Cuando quieras avanzar con el AIRE, el pasaporte o la CIE, escribinos y lo arrancamos.' },
 ];
 
 const CAMINO_GENERICO = [
-  { n:'Arrancamos tu trámite', c:'--vi', l:'--vil', i:'◆', tags:['Consulta inicial'],
+  { n:'Arrancamos tu trámite', c:'--vi', l:'--vil', i:'◆', tags:['Consulta inicial'], seguro:true,
     ahora:'Analizamos tu caso y armamos el plan del trámite.',
-    hecho:['Revisamos tu situación','Armamos tu presupuesto','Abrimos tu expediente en Zittano'],
+    haciendo:['Revisamos tu situación','Armamos tu presupuesto','Abrimos tu expediente en Zittano'],
+    logro:['Analizamos tu caso','Abrimos tu expediente en Zittano'],
     sigueT:'Preparamos tu documentación', sigueD:'Juntamos y revisamos todo lo que hace falta presentar.' },
-  { n:'Preparando tu documentación', c:'--vd', l:'--vdl', i:'✎',
+  { n:'Tu documentación', c:'--vd', l:'--vdl', i:'✎',
     tags:['En proceso - Acta Italiana','En proceso - CNE','En proceso - Actas Nacionales','En proceso - Traducciones','En proceso - Carga DNI','En proceso - Expte de Cámara'],
-    ahora:'Estamos juntando y preparando toda la documentación de tu trámite.',
-    hecho:['Revisamos qué documentación necesita tu caso','Pedimos lo que faltaba','Verificamos que los datos coincidan'],
+    ahora:'Estamos juntando y preparando la documentación de tu trámite.',
+    haciendo:['Revisamos qué documentación necesita tu caso','Pedimos lo que faltaba'],
+    logro:['Tu documentación quedó completa'],
     sigueT:'Presentamos tu trámite', sigueD:'Una vez completo, lo presentamos ante quien corresponda.' },
   { n:'Trámite presentado', c:'--az', l:'--azl', i:'✦',
     tags:['En proceso - AIRE','En proceso - AIRE de cero','En proceso - Anagrafe - Hijo Menor','En proceso - Anagrafe - Matrimonio','En proceso - Anagrafe - Domicilio','En proceso - Divorcio','En proceso - Pasaportes','En proceso - Códice Fiscale','En proceso - CIE','En proceso - SPID','Carpeta para retirar'],
-    ahora:'Tu trámite está presentado. Ahora seguimos el expediente hasta que salga.',
-    hecho:['Tu documentación quedó completa','Presentamos el trámite','Hacemos seguimiento del expediente'],
+    ahora:'Tu trámite está presentado. Seguimos el expediente hasta que salga.',
+    haciendo:['Presentamos tu trámite','Seguimos el expediente de cerca'],
+    logro:['Tu trámite quedó presentado'],
     sigueT:'Esperamos la resolución', sigueD:'Te avisamos apenas tengamos novedades.',
     tiempo:'Los tiempos varían según la oficina que resuelve. Nosotros seguimos tu expediente de cerca.' },
   { n:'Trámite terminado', c:'--ro', l:'--rol', i:'❖', tags:['Finalizado','Cerrado'],
     ahora:'Terminamos tu trámite. Gracias por confiar en nosotros.',
-    hecho:['Tu trámite quedó resuelto','Te acompañamos en todo el recorrido'],
+    haciendo:['Tu trámite quedó resuelto'],
+    logro:['Tu trámite quedó resuelto'],
     sigueT:'Lo que viene después', sigueD:'Si necesitás avanzar con otro trámite, escribinos y lo arrancamos.' },
 ];
 
@@ -348,10 +366,31 @@ const caminoDe = tipo => CAMINOS[tipo] || CAMINO_GENERICO;
 /* Devuelve en qué etapa está el cliente. Nunca devuelve "ninguna":
    si las etiquetas no matchean nada conocido, se queda en la primera,
    que igual es verdad (ya pasaron la consulta para tener código). */
-function etapaActual(camino, tags){
-  let idx = 0;
-  camino.forEach((et,i)=>{ if(et.tags.some(t=>tags.includes(t))) idx = i; });
-  return idx;
+/* Estado de cada etapa. Una etapa NO se da por terminada solo porque
+   haya otra más adelante: el acta italiana puede seguir sin llegar
+   mientras ya pedimos las argentinas. La regla es:
+
+     en curso  → su etiqueta está puesta hoy en el Sistema
+     listo     → su etiqueta YA NO está, y hay otra etapa posterior
+                 en curso (o sea: el equipo la sacó porque terminó)
+     pendiente → todavía no le llegó el turno
+
+   Varias etapas pueden estar en curso al mismo tiempo, que es como
+   realmente se trabaja. Si no hay ninguna etiqueta conocida, la
+   primera queda en curso: nunca mostramos un trámite vacío. */
+function estadoEtapas(camino, tags, terminado){
+  const activa = camino.map(et => et.tags.some(t => tags.includes(t)));
+  if(terminado) return camino.map((_,i)=> i===camino.length-1 ? 'curso' : 'listo');
+
+  let ultima = -1;
+  activa.forEach((a,i)=>{ if(a) ultima = i; });
+  if(ultima === -1) return camino.map((_,i)=> i===0 ? 'curso' : 'pendiente');
+
+  return camino.map((_,i)=>{
+    if(activa[i]) return 'curso';
+    if(i < ultima) return 'listo';
+    return 'pendiente';
+  });
 }
 
 /* ── Datos de ejemplo (?demo) ─────────────────────────────────── */
@@ -448,37 +487,57 @@ function render(d){
 
   // El camino (sin porcentaje: ver el bloque EL CAMINO más arriba)
   const camino = caminoDe(d.tipo);
-  const pos = terminado ? camino.length-1 : etapaActual(camino, tags);
-  const et  = camino[pos];
+  const est = estadoEtapas(camino, tags, terminado);
+  // La etapa que manda para "Lo que sigue" es la última en curso.
+  let pos = 0; est.forEach((s,i)=>{ if(s==='curso') pos = i; });
+  const et = camino[pos];
   $('updated').textContent = actualizadoTxt(d.actualizado);
 
   show('caminoWrap', true);
   $('camino').innerHTML = camino.map((e,i)=>{
-    const hecho = i < pos, ahora = i === pos;
+    const s = est[i], listo = s==='listo', curso = s==='curso';
     const sig = camino[i+1];
     const col = `var(${e.c})`;
     const linea = `<span class="cm-línea"${
-      hecho && sig ? ` style="background:linear-gradient(180deg,${col},${i+1<=pos?`var(${sig.c})`:'var(--track)'})"` : ''
+      (listo||curso) && sig && est[i+1]!=='pendiente'
+        ? ` style="background:linear-gradient(180deg,${col},var(${sig.c}))"`
+        : ((listo||curso) && sig ? ` style="background:linear-gradient(180deg,${col},var(--track))"` : '')
     }></span>`;
-    const dot = hecho ? ` style="background:${col}"`
-              : ahora ? ` style="background:${col};--halo:var(${e.l})"` : '';
-    return `<div class="cm-st ${hecho?'hecho':(ahora?'ahora':'')}">
+    const dot = listo ? ` style="background:${col}"`
+              : curso ? ` style="background:${col};--halo:var(${e.l})"` : '';
+    return `<div class="cm-st ${listo?'hecho':(curso?'ahora':'')}">
       ${linea}
-      <div class="cm-dot"${dot}>${hecho?'✓':(ahora?e.i:'')}</div>
+      <div class="cm-dot"${dot}>${listo?'✓':(curso?e.i:'')}</div>
       <div class="cm-n">${e.n}</div>
-      ${ahora?`<div class="cm-d">${e.ahora}</div>
-        <div class="cm-badge" style="background:var(${e.l});color:${col}">Acá estás ahora</div>`:''}
+      ${curso?`<div class="cm-d">${e.ahora}</div>
+        <div class="cm-badge" style="background:var(${e.l});color:${col}">En curso</div>`:''}
     </div>`;
   }).join('');
 
-  // Lo que ya hicimos / lo que sigue / lo que necesitamos de vos
+  /* "Lo que ya hicimos" se arma SOLO con lo que de verdad pasó:
+     de las etapas terminadas, el resultado; de las que están en curso,
+     las acciones que ya hicimos en ellas. De las pendientes, nada. */
   const pideDoc = tags.includes('Documentación pendiente');
-  let blq = `
-    <div class="blk" style="border-top-color:var(--vd)">
+  const hechos = [];
+  camino.forEach((e,i)=>{
+    if(est[i]==='curso'){ hechos.push(...(e.haciendo||[])); return; }
+    if(est[i]!=='listo') return;
+    /* Ojo acá: que una etiqueta ya no esté NO prueba que esa parte
+       terminó — puede que nunca se haya cargado. Así que el resultado
+       ("llegaron tus actas") solo se afirma si el trámite está
+       finalizado, o en la etapa de apertura, que siempre es cierta
+       porque para tener código ya pasaron por la consulta. */
+    if(terminado || e.seguro) hechos.push(...(e.logro||[]));
+  });
+
+  let blq = '';
+  if(hechos.length){
+    blq += `<div class="blk" style="border-top-color:var(--vd)">
       <div class="eyebrow" style="color:var(--vd)">Lo que ya hicimos</div>
-      ${et.hecho.map(h=>`<div class="blk-li"><span class="blk-tick">✓</span><span>${h}</span></div>`).join('')}
+      ${hechos.map(h=>`<div class="blk-li"><span class="blk-tick">✓</span><span>${h}</span></div>`).join('')}
     </div>`;
-  if(!terminado || et.sigueT){
+  }
+  if(et.sigueT){
     blq += `<div class="blk" style="border-top-color:var(${et.c})">
       <div class="eyebrow" style="color:var(${et.c})">Lo que sigue</div>
       <div class="blk-t">${et.sigueT}</div>
