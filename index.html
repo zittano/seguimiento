@@ -24,12 +24,53 @@
 <style>
 :root{
   --bg:#F7F4EE; --card:#FFFFFF; --ink:#22252A; --muted:#5E6168; --line:#E6E0D4; --field:#FBFAF7; --field-line:#D8D3C8;
-  --green:#17734A; --green-dark:#0F5435; --green-soft:#E3F1E8; --green-on-dark:#A9D8BD;
-  --red:#B9343B; --red-soft:#FBE6E6; --red-ink:#8E2329;
+  --green:#009246; --green-dark:#00753a; --green-soft:#E3F1E8; --green-on-dark:#A9D8BD;
+  --red:#CE2B37; --red-soft:#FBE6E6; --red-ink:#8E2329;
   --amber-soft:#FCEFD3; --amber-ink:#6B4400; --amber-icon:#8A5A00;
   --track:#ECE7DD; --pending:#CFC8BA;
   --shadow:0 1px 2px rgba(34,37,42,.06),0 8px 24px rgba(34,37,42,.06);
+  /* Colores de marca, los mismos de zittano.com.ar */
+  --az:#003399; --azl:#e8efff;
+  --vd:#009246; --vdl:#e6f7ee;
+  --ro:#CE2B37; --rol:#fdecea;
+  --gold:#c9a227; --goldl:#fdf6dd;
+  --vi:#7c3aed; --vil:#f1eaff;
+  --ci:#0891b2; --cil:#e2f6fb;
+  --am:#e8a000; --aml:#fef4d9;
 }
+
+/* ══ EL CAMINO — reemplaza a la barra de porcentaje ══ */
+.eyebrow{font-size:10.5px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:11px;}
+.eyebrow::before{content:"";width:22px;height:2px;background:currentColor;flex:none;}
+.camino{position:relative;margin:4px 0 20px;}
+.cm-st{position:relative;padding-left:44px;padding-bottom:22px;}
+.cm-st:last-child{padding-bottom:0;}
+.cm-línea{position:absolute;left:14px;top:30px;bottom:-4px;width:3px;border-radius:3px;background:var(--track);}
+.cm-st:last-child .cm-línea{display:none;}
+.cm-dot{position:absolute;left:0;top:2px;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:var(--card);border:2.5px solid var(--track);color:var(--pending);}
+.cm-st.hecho .cm-dot,.cm-st.ahora .cm-dot{border:none;color:#fff;}
+.cm-st.ahora .cm-dot{box-shadow:0 0 0 6px var(--halo);}
+.cm-n{font-size:15px;font-weight:600;color:var(--pending);padding-top:5px;}
+.cm-st.hecho .cm-n{color:var(--muted);}
+.cm-st.ahora .cm-n{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px;color:var(--ink);padding-top:3px;line-height:1.25;}
+.cm-d{font-size:14px;color:var(--muted);margin-top:6px;line-height:1.5;}
+.cm-badge{display:inline-block;margin-top:9px;padding:5px 12px;border-radius:30px;font-size:11px;font-weight:700;letter-spacing:.4px;}
+
+/* ══ Bloques: lo hecho / lo que sigue / lo que necesitamos ══ */
+.blk{background:var(--card);border-radius:16px;padding:18px;border:1.5px solid var(--line);border-top-width:4px;box-shadow:var(--shadow);}
+.blk-li{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:5px 0;color:var(--muted);line-height:1.5;}
+.blk-tick{flex:none;width:19px;height:19px;border-radius:50%;background:var(--vdl);color:var(--vd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:2px;}
+.blk-t{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:18px;margin-bottom:5px;line-height:1.25;}
+.blk-d{font-size:14px;color:var(--muted);line-height:1.5;}
+.blk-tiempo{margin-top:12px;padding:10px 13px;background:var(--bg);border-radius:10px;font-size:12.5px;color:var(--muted);border-left:3px solid var(--line);line-height:1.5;}
+.blk-ok{font-size:14.5px;font-weight:700;color:var(--ink);}
+.blk.oro{background:var(--goldl);border-color:#ecd98c;border-top-color:var(--gold);}
+.blk.oro .blk-d{color:#6b5410;font-weight:600;font-size:14.5px;}
+
+/* ══ Cierre ══ */
+.cierre{margin-top:4px;padding:22px 20px;border-radius:18px;color:#eef2f8;background:linear-gradient(155deg,var(--az) 0%,#001f4d 100%);font-size:14.5px;line-height:1.6;position:relative;overflow:hidden;}
+.cierre::after{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--vd) 0 33%,#fff 33% 66%,var(--ro) 66% 100%);}
+.cierre b{color:#fff;font-weight:700;}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
@@ -161,17 +202,19 @@ input::placeholder{color:#9A9CA1;letter-spacing:1px}
           </div>
           <span class="pill green" id="tramPill"></span>
         </div>
-        <div id="progressWrap">
-          <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="bar"><div id="barFill" style="width:0%"></div></div>
-        </div>
-        <div class="tram-meta"><span id="progressTxt"></span><span id="updated"></span></div>
+        <div class="tram-meta"><span id="updated"></span></div>
         <div id="gestorRow" class="gestor hidden">
           <div class="g-av" id="gestorAv" aria-hidden="true"></div>
           <div><div class="g-k">A cargo de tu trámite</div><div class="g-n" id="gestorName"></div></div>
         </div>
       </div>
       <div id="alerts" style="display:flex;flex-direction:column;gap:12px"></div>
+      <div id="caminoWrap" class="hidden">
+        <div class="eyebrow" style="color:var(--az)">El camino de tu trámite</div>
+        <div class="camino" id="camino"></div>
+      </div>
       <div id="nowCards" style="display:flex;flex-direction:column;gap:12px"></div>
+      <div id="bloques" style="display:flex;flex-direction:column;gap:12px"></div>
     </section>
 
     <div class="wa"><a id="waApp" class="btn ghost" href="#" target="_blank" rel="noopener">
@@ -202,6 +245,7 @@ const ETAPAS = {
   'En proceso - Acta Italiana':['Buscando tus actas en Italia','Las pedimos al comune de origen. Te avisamos apenas lleguen.'],
   'En proceso - CNE':['Tramitando el certificado de la CNE','Es el certificado de la Cámara Nacional Electoral sobre la naturalización de tu ascendiente.'],
   'En proceso - Actas Nacionales':['Gestionando tus partidas argentinas','Estamos pidiendo las actas de tu línea familiar en los registros civiles.'],
+  'En proceso - Expte de Cámara':['Tramitando tu expediente de Cámara','Es el expediente que acredita si tu ascendiente se naturalizó argentino. Lo pedimos, se apostilla y se traduce.'],
   'En proceso - Traducciones':['Traduciendo tu documentación','Tus actas se están traduciendo al italiano.'],
   'En proceso - AIRE de cero':['Gestionando tu inscripción en el AIRE','Es el registro de italianos que viven en el exterior.'],
   'En proceso - AIRE':['Gestionando tu inscripción en el AIRE','Es el registro de italianos que viven en el exterior.'],
@@ -216,6 +260,99 @@ const ETAPAS = {
   'En proceso - SPID':['Tramitando tu SPID','Tu identidad digital para hacer trámites italianos online.']
 };
 const LISTO = ['finalizado','recibida','listo'];
+
+/* ════════════════════════════════════════════════════════════════
+   EL CAMINO — reemplaza al porcentaje.
+   Un número siempre se puede leer como poco: 0% da la sensación de
+   que no hicimos nada, cuando en realidad para tener código ya
+   pasaron la consulta, el análisis del caso y la apertura del
+   expediente. Acá el cliente ve el recorrido completo, en qué
+   parte está parado, qué ya hicimos y qué sigue.
+
+   Cada etapa engancha con las etiquetas que usa el Sistema. Si
+   aparece una etiqueta que no conocemos, el cliente NUNCA baja a
+   cero: se queda en la última etapa conocida (o en la primera).
+   ════════════════════════════════════════════════════════════════ */
+const RECONSTRUCCION = [
+  { n:'Arrancamos tu caso', c:'--vi', l:'--vil', i:'◆',
+    tags:['Consulta inicial'],
+    ahora:'Estudiamos tu árbol familiar y confirmamos por dónde va tu ciudadanía.',
+    hecho:['Analizamos tu línea de descendencia italiana','Confirmamos que tu caso aplica','Armamos tu presupuesto a medida','Abrimos tu expediente en Zittano'],
+    sigueT:'Pedimos tus actas en Italia',
+    sigueD:'Escribimos al comune de origen de tu familia para que nos manden las partidas originales.' },
+  { n:'Buscando tus actas en Italia', c:'--vd', l:'--vdl', i:'✈',
+    tags:['En proceso - Acta Italiana'],
+    ahora:'Le pedimos al comune de origen de tu familia las partidas originales.',
+    hecho:['Identificamos el comune exacto de tu antepasado','Enviamos el pedido formal de las actas','Hacemos seguimiento del pedido'],
+    sigueT:'Juntamos tus actas argentinas',
+    sigueD:'Mientras Italia responde, vamos pidiendo todo lo que hace falta de este lado.',
+    tiempo:'Los comunes italianos suelen tardar entre 2 y 6 meses. Es la parte más lenta del trámite y no depende de nosotros, pero los seguimos de cerca.' },
+  { n:'Juntando tus actas argentinas', c:'--ci', l:'--cil', i:'★',
+    tags:['En proceso - CNE','En proceso - Actas Nacionales','En proceso - Expte de Cámara'],
+    ahora:'Pedimos las partidas argentinas y los expedientes que necesita tu carpeta.',
+    hecho:['Llegaron las actas desde Italia','Pedimos las partidas argentinas del Registro Civil','Iniciamos el expediente de Cámara'],
+    sigueT:'Apostillas y traducciones',
+    sigueD:'Cada acta se apostilla y la traduce un traductor público al italiano.',
+    tiempo:'Entre 1 y 2 meses según la provincia de cada partida.' },
+  { n:'Apostillas y traducciones', c:'--am', l:'--aml', i:'✎',
+    tags:['En proceso - Traducciones'],
+    ahora:'Cada acta se apostilla y la traduce un traductor público al italiano.',
+    hecho:['Llegaron todas tus actas, de Italia y de acá','Verificamos que los datos coincidan entre partidas','Mandamos todo a apostillar','Encargamos las traducciones oficiales'],
+    sigueT:'Revisión final de la carpeta',
+    sigueD:'Revisamos hoja por hoja con el criterio del consulado que te toca, antes de presentar.',
+    tiempo:'Alrededor de un mes entre apostillas y traducciones.' },
+  { n:'Carpeta lista', c:'--az', l:'--azl', i:'✦',
+    tags:['Carpeta para retirar'],
+    ahora:'Tu carpeta está completa y revisada con el criterio de tu consulado.',
+    hecho:['Tu carpeta está completa: actas, apostillas y traducciones','Revisamos hoja por hoja contra los requisitos del consulado','Corregimos todo lo que podía observarse'],
+    sigueT:'El turno en el consulado',
+    sigueD:'Coordinamos el turno y te preparamos para el día de la presentación.',
+    tiempo:'Los turnos dependen de cada consulado. Te avisamos apenas tengamos fecha.',
+    pide:'Para el turno vamos a necesitar tus comprobantes de domicilio del mes. Te avisamos con tiempo.' },
+  { n:'Trámite terminado', c:'--ro', l:'--rol', i:'❖',
+    tags:['Finalizado','Cerrado'],
+    ahora:'Terminamos tu trámite. Gracias por confiar en nosotros.',
+    hecho:['Tu documentación quedó completa y presentada','Te acompañamos en todo el recorrido'],
+    sigueT:'Lo que viene después',
+    sigueD:'Cuando quieras avanzar con el AIRE, el pasaporte o la CIE, escribinos y lo arrancamos.' },
+];
+
+const CAMINO_GENERICO = [
+  { n:'Arrancamos tu trámite', c:'--vi', l:'--vil', i:'◆', tags:['Consulta inicial'],
+    ahora:'Analizamos tu caso y armamos el plan del trámite.',
+    hecho:['Revisamos tu situación','Armamos tu presupuesto','Abrimos tu expediente en Zittano'],
+    sigueT:'Preparamos tu documentación', sigueD:'Juntamos y revisamos todo lo que hace falta presentar.' },
+  { n:'Preparando tu documentación', c:'--vd', l:'--vdl', i:'✎',
+    tags:['En proceso - Acta Italiana','En proceso - CNE','En proceso - Actas Nacionales','En proceso - Traducciones','En proceso - Carga DNI','En proceso - Expte de Cámara'],
+    ahora:'Estamos juntando y preparando toda la documentación de tu trámite.',
+    hecho:['Revisamos qué documentación necesita tu caso','Pedimos lo que faltaba','Verificamos que los datos coincidan'],
+    sigueT:'Presentamos tu trámite', sigueD:'Una vez completo, lo presentamos ante quien corresponda.' },
+  { n:'Trámite presentado', c:'--az', l:'--azl', i:'✦',
+    tags:['En proceso - AIRE','En proceso - AIRE de cero','En proceso - Anagrafe - Hijo Menor','En proceso - Anagrafe - Matrimonio','En proceso - Anagrafe - Domicilio','En proceso - Divorcio','En proceso - Pasaportes','En proceso - Códice Fiscale','En proceso - CIE','En proceso - SPID','Carpeta para retirar'],
+    ahora:'Tu trámite está presentado. Ahora seguimos el expediente hasta que salga.',
+    hecho:['Tu documentación quedó completa','Presentamos el trámite','Hacemos seguimiento del expediente'],
+    sigueT:'Esperamos la resolución', sigueD:'Te avisamos apenas tengamos novedades.',
+    tiempo:'Los tiempos varían según la oficina que resuelve. Nosotros seguimos tu expediente de cerca.' },
+  { n:'Trámite terminado', c:'--ro', l:'--rol', i:'❖', tags:['Finalizado','Cerrado'],
+    ahora:'Terminamos tu trámite. Gracias por confiar en nosotros.',
+    hecho:['Tu trámite quedó resuelto','Te acompañamos en todo el recorrido'],
+    sigueT:'Lo que viene después', sigueD:'Si necesitás avanzar con otro trámite, escribinos y lo arrancamos.' },
+];
+
+const CAMINOS = {
+  reconstruccion: RECONSTRUCCION,
+  hijo_directo:   RECONSTRUCCION,
+};
+const caminoDe = tipo => CAMINOS[tipo] || CAMINO_GENERICO;
+
+/* Devuelve en qué etapa está el cliente. Nunca devuelve "ninguna":
+   si las etiquetas no matchean nada conocido, se queda en la primera,
+   que igual es verdad (ya pasaron la consulta para tener código). */
+function etapaActual(camino, tags){
+  let idx = 0;
+  camino.forEach((et,i)=>{ if(et.tags.some(t=>tags.includes(t))) idx = i; });
+  return idx;
+}
 
 /* ── Datos de ejemplo (?demo) ─────────────────────────────────── */
 const DEMO = {
@@ -289,9 +426,10 @@ async function load(code){
 
 function render(d){
   const tags = Array.isArray(d.tags)?d.tags:[];
-  const secs = (Array.isArray(d.secciones)?d.secciones:[]).filter(s=>Array.isArray(s.items)&&s.items.length);
-  const items = secs.flatMap(s=>s.items);
-  const listos = items.filter(i=>LISTO.includes(i.estado)).length;
+  /* Antes el avance se calculaba contando el checklist de documentos
+     (d.secciones). Como el portal ya no muestra documentos, ese checklist
+     casi nunca se completa y el cálculo daba 0%. Ahora el avance sale de
+     las etiquetas del Sistema, que es lo que el equipo sí mantiene. */
   const terminado = tags.includes('Finalizado')||tags.includes('Cerrado');
   const carpeta = tags.includes('Carpeta para retirar');
   const etapas = tags.filter(t=>t.startsWith('En proceso - ')||t==='Consulta inicial');
@@ -308,14 +446,59 @@ function render(d){
   $('tramCode').textContent = d.codigo || '';
   $('tramPill').textContent = terminado ? 'Finalizado' : carpeta ? 'Para retirar' : 'En curso';
 
-  // Progreso
-  const pct = (terminado||carpeta) ? 100 : items.length ? Math.round(listos/items.length*100) : 0;
-  show('progressWrap', items.length>0 || terminado || carpeta);
-  $('bar').setAttribute('aria-valuenow', pct);
-  $('bar').setAttribute('aria-label', 'Avance del trámite: '+pct+'%');
-  requestAnimationFrame(()=>{ $('barFill').style.width = pct+'%'; });
-  $('progressTxt').textContent = (terminado||carpeta) ? 'Todo listo' : items.length ? pct+'% de avance' : '';
+  // El camino (sin porcentaje: ver el bloque EL CAMINO más arriba)
+  const camino = caminoDe(d.tipo);
+  const pos = terminado ? camino.length-1 : etapaActual(camino, tags);
+  const et  = camino[pos];
   $('updated').textContent = actualizadoTxt(d.actualizado);
+
+  show('caminoWrap', true);
+  $('camino').innerHTML = camino.map((e,i)=>{
+    const hecho = i < pos, ahora = i === pos;
+    const sig = camino[i+1];
+    const col = `var(${e.c})`;
+    const linea = `<span class="cm-línea"${
+      hecho && sig ? ` style="background:linear-gradient(180deg,${col},${i+1<=pos?`var(${sig.c})`:'var(--track)'})"` : ''
+    }></span>`;
+    const dot = hecho ? ` style="background:${col}"`
+              : ahora ? ` style="background:${col};--halo:var(${e.l})"` : '';
+    return `<div class="cm-st ${hecho?'hecho':(ahora?'ahora':'')}">
+      ${linea}
+      <div class="cm-dot"${dot}>${hecho?'✓':(ahora?e.i:'')}</div>
+      <div class="cm-n">${e.n}</div>
+      ${ahora?`<div class="cm-d">${e.ahora}</div>
+        <div class="cm-badge" style="background:var(${e.l});color:${col}">Acá estás ahora</div>`:''}
+    </div>`;
+  }).join('');
+
+  // Lo que ya hicimos / lo que sigue / lo que necesitamos de vos
+  const pideDoc = tags.includes('Documentación pendiente');
+  let blq = `
+    <div class="blk" style="border-top-color:var(--vd)">
+      <div class="eyebrow" style="color:var(--vd)">Lo que ya hicimos</div>
+      ${et.hecho.map(h=>`<div class="blk-li"><span class="blk-tick">✓</span><span>${h}</span></div>`).join('')}
+    </div>`;
+  if(!terminado || et.sigueT){
+    blq += `<div class="blk" style="border-top-color:var(${et.c})">
+      <div class="eyebrow" style="color:var(${et.c})">Lo que sigue</div>
+      <div class="blk-t">${et.sigueT}</div>
+      <div class="blk-d">${et.sigueD}</div>
+      ${et.tiempo?`<div class="blk-tiempo">⏳ ${et.tiempo}</div>`:''}
+    </div>`;
+  }
+  if(!terminado){
+    // Si el Sistema marcó "Documentación pendiente", el aviso de arriba ya
+    // lo dice con su botón de WhatsApp; acá no lo repetimos.
+    blq += (et.pide && !pideDoc)
+      ? `<div class="blk oro"><div class="eyebrow" style="color:#9a7a10">Lo que necesitamos de vos</div><div class="blk-d">${et.pide}</div></div>`
+      : (pideDoc ? '' :
+         `<div class="blk" style="border-top-color:var(--line)">
+            <div class="eyebrow" style="color:var(--pending)">Lo que necesitamos de vos</div>
+            <div class="blk-ok">Nada por ahora. Seguimos nosotros.</div>
+          </div>`);
+  }
+  blq += `<div class="cierre">Tu familia salió de Italia hace generaciones. <b>Nosotros estamos trayendo esos papeles de vuelta</b>, uno por uno, hasta que tu ciudadanía esté reconocida.</div>`;
+  $('bloques').innerHTML = blq;
   const gestor = String(d.gestor||'').trim();
   show('gestorRow', !!gestor);
   if(gestor){ $('gestorName').textContent = gestor+' · Zittano'; $('gestorAv').textContent = gestor.charAt(0).toUpperCase(); }
